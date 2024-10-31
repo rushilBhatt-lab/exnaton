@@ -13,6 +13,19 @@ import { EnergyDataResponse } from 'src/shared/interface/interface';
 @Controller('energy-readings')
 export class EnergyController {
   constructor(private readonly energyService: EnergyService) {}
+  @ApiOperation({
+    summary:
+      'Initially use this endpoint to fetch energy data from external URLs and Populate the database so frontend will work smoothly',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Data fetched and stored successfully.',
+  })
+  @Post('fetch')
+  async fetchDataAndStore(): Promise<string> {
+    await this.energyService.fetchDataAndStore();
+    return 'Data fetched and stored successfully';
+  }
 
   @ApiOperation({ summary: 'Get energy records based on query parameters' })
   @ApiResponse({
@@ -66,19 +79,6 @@ export class EnergyController {
       page,
       limit,
     });
-  }
-
-  @ApiOperation({
-    summary: 'Fetch energy data from external URLs and store in database',
-  })
-  @ApiResponse({
-    status: 201,
-    description: 'Data fetched and stored successfully.',
-  })
-  @Post('fetch')
-  async fetchDataAndStore(): Promise<string> {
-    await this.energyService.fetchDataAndStore();
-    return 'Data fetched and stored successfully';
   }
 
   private validateDate(date: string): boolean {

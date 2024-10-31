@@ -25,7 +25,7 @@ The project has two main directories:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/exnaton.git
+   git clone https://github.com/your-username/exnaton.git](https://github.com/rushilBhatt-lab/exnaton.git
    cd exnaton
    ```
 

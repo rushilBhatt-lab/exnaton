@@ -11,7 +11,7 @@ These instructions will help you set up and run the project on your local machin
 Make sure you have the following installed on your machine:
 
 - **Docker**: [Download Docker](https://www.docker.com/products/docker-desktop)
-- **Node.js**: Version 21 (if running without Docker)
+- **Node.js**: Version 21
 
 ## Project Structure
 
@@ -37,6 +37,7 @@ The project has two main directories:
    DB_USERNAME=''
    DB_PASSWORD=''
    DB_NAME=''
+
 3. Use docker-compose up --build to Run the application
    This command will:
    - Build and start the backend, frontend, and database services.

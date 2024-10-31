@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis, Tooltip, ResponsiveContainer, Brush } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "exnaton-frontend/components/ui/card";
 import { EnergyData, EnergyStatistics } from "../../utils/interface";
@@ -20,6 +20,40 @@ interface Props {
 }
 
 const EnergyDataChart: React.FC<Props> = ({ data, loading, hasMoreData, fetchMoreData, error }) => {
+	const [brushDateRange, setBrushDateRange] = useState<{ start: string; end: string } | null>(null);
+
+	const handleBrushChange = (range: { startIndex?: number; endIndex?: number }) => {
+		if (range.startIndex !== undefined && range.endIndex !== undefined) {
+			const startDate = data[range.startIndex]?.timestamp;
+			const endDate = data[range.endIndex]?.timestamp;
+
+			if (startDate && endDate) {
+				setBrushDateRange({
+					start: new Date(startDate).toLocaleString("en-US", {
+						month: "short",
+						day: "numeric",
+						year: "numeric",
+						hour: "2-digit",
+						minute: "2-digit",
+						timeZone: "UTC",
+						hour12: false,
+					}),
+					end: new Date(endDate).toLocaleString("en-US", {
+						month: "short",
+						day: "numeric",
+						year: "numeric",
+						hour: "2-digit",
+						minute: "2-digit",
+						timeZone: "UTC",
+						hour12: false,
+					}),
+				});
+			}
+		} else {
+			setBrushDateRange(null);
+		}
+	};
+
 	return (
 		<Card>
 			<CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
@@ -78,17 +112,31 @@ const EnergyDataChart: React.FC<Props> = ({ data, loading, hasMoreData, fetchMor
 										}}
 									/>
 									<Line dataKey="meter_reading" type="monotone" strokeWidth={2} dot={false} />
-									<Brush dataKey="timestamp" height={40} stroke="#8884d8" fill="#f0f0f5" startIndex={0} travellerWidth={12}>
+									<Brush
+										dataKey="timestamp"
+										style={{ margin: "20px" }}
+										tickFormatter={() => ""}
+										onChange={handleBrushChange}
+										height={40}
+										stroke="#8884d8"
+										fill="#f0f0f5"
+										travellerWidth={12}
+									>
 										<div className="text-xs text-gray-600">Use slider to view more data</div>
 									</Brush>
 								</LineChart>
 							</ResponsiveContainer>
 						</div>
+						{brushDateRange && (
+							<div className="text-sm text-center mt-2 text-gray-700">
+								Currently Displaying Data From: {brushDateRange.start} - {brushDateRange.end}
+							</div>
+						)}
 						<div className="text-sm text-center mt-2 text-gray-500">
 							<span role="img" aria-label="hand">
-								👉
+								🖐️
 							</span>
-							Try Dragging the slider above to have more close look
+							Drag the slider above to zoom in for a closer view of the data.
 							{hasMoreData && (
 								<div className="text-center mt-4">
 									<Button type="button" onClick={fetchMoreData} variant="outline">

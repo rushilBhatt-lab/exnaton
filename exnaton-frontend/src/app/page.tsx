@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import EnergyDataChart from "../components/EnergydataChart/EnergyDataChart";
+import EnergyDataChart from "../components/EnergyDataChart/EnergyDataChart";
 import ChartSkeleton from "exnaton-frontend/components/SkeletonLoader/ChartSkeleton";
 import { useAppSelector } from "exnaton-frontend/lib/hook";
 import { RootState } from "exnaton-frontend/lib/store";

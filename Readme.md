@@ -30,19 +30,20 @@ The project has two main directories:
    ```
 
 2. Create an .env file in the exnaton-backend directory with the following variables:
-   NODE_ENV=''
+   ``` NODE_ENV=''
    PORT=
    DB_HOST=''
    DB_PORT=
    DB_USERNAME=''
    DB_PASSWORD=''
    DB_NAME=''
+   ```
 
 3. Use docker-compose up --build to Run the application
    This command will:
    - Build and start the backend, frontend, and database services.
    - Set up a Docker network for the services to communicate with each other.
-4. To populate the database use this endpoint in swagger documentation. GET /energy-readings/fetch
+4. To **populate the database** use this endpoint in swagger documentation, **GET /energy-readings/fetch**
 5. Accessing the Application
    Frontend: Visit http://localhost:3000 in your browser to view the Next.js application.
    Backend: You can use http://localhost:3001 to access the backend API.
